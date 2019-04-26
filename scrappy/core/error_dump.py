@@ -1,7 +1,5 @@
 from time import gmtime, strftime
 from uuid import uuid4
-from os import remove
-from pytest import raises
 import pydebug
 
 debug = pydebug.debug("core:logger")
@@ -43,22 +41,3 @@ def error_dump(caller_id, error, path="/tmp/scrappy.dump"):
                                           error_summary=formatedError[:20])
         debug(msg)
         file.write(str(formatedError))
-
-
-def test_format_error():
-    error, error_id = format_error("eita p** deu errado")
-    assert type(error) == str
-
-
-def test_error_dump():
-    _id = uuid4()
-    path = "/tmp/{}".format(_id)
-    with raises(FileNotFoundError):
-        open(path, 'r')
-    error_dump(1, "fuck", path)
-    try:
-        open(path, 'r')
-    except:
-        assert False
-    finally:
-        remove(path)

@@ -4,12 +4,11 @@ from queue import Empty, Queue
 from selenium import webdriver
 from threading import Thread, Event
 from uuid import uuid4
+from scrappy.core.commands import Die
 import time
 import pydebug
 
 debug = pydebug.debug("driver:worker")
-# This task tells a worker to stop and cleanup
-Die = object()
 
 
 class Worker(Thread):
@@ -82,46 +81,3 @@ class Worker(Thread):
 
         self.dispose()
         debug("Worker {} has stopped".format(self._id))
-
-
-def test_worker_with_context():
-    def task(driver):
-        driver.get("http://google.com")
-        driver.find_element_by_css_selector("coco")
-
-    with Worker("/home/vinicius/Downloads/chromedriver") as worker:
-
-        assert not worker.is_open
-        worker.start()
-        assert worker.is_open
-
-        worker.schedule_task(task)
-        worker.schedule_task(task)
-        worker.schedule_task(task)
-
-        assert worker.is_open
-
-
-def test_worker_without_jobs():
-    def task(driver):
-        driver.get("http://google.com")
-        driver.find_element_by_css_selector("coco")
-
-    with Worker("/home/vinicius/Downloads/chromedriver") as worker:
-
-        assert not worker.is_open
-        worker.start()
-        assert worker.is_open
-
-
-def test_worker_without_context():
-    def task(driver):
-        driver.get("http://google.com")
-        driver.find_element_by_css_selector("coco")
-
-    worker = Worker("/home/vinicius/Downloads/chromedriver")
-    assert not worker.is_open
-    worker.start()
-    assert worker.is_open
-    worker.schedule_task(Die)
-    worker.join()

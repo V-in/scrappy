@@ -1,9 +1,10 @@
-from scrappy.driver.worker import Worker, Die
+from scrappy.driver.worker import Worker
+from scrappy.core.commands import Die
 import time
 
 
 def create(size, driver_path="/home/vinicius/Downloads/chromedriver",
-           headless=False):
+           headless=True):
     return list([Worker(driver_path, headless) for _ in range(size)])
 
 
@@ -25,18 +26,3 @@ def dispose(pool):
     """
     for worker in pool:
         worker.schedule_task(Die)
-
-
-def test_pool_lifecycle():
-    # Birth
-    pool = create(5)
-    for worker in pool:
-        assert not worker.is_open
-
-    # Life
-    start_all(pool)
-    for worker in pool:
-        assert worker.is_open
-
-    # Death
-    dispose(pool)
