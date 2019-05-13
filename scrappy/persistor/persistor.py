@@ -1,5 +1,4 @@
 from scrappy.persistor.document import Document
-from scrappy.persistor.persistor import Persistor
 from scrappy.core.error_dump import error_dump
 from scrappy.core.utils import ensure_dir
 from scrappy.core.commands import Die
@@ -12,20 +11,59 @@ import pydebug
 debug = pydebug.debug("persistor")
 
 
-class FileSystemPersistor(Persistor):
+class Persistor(Thread):
     """Simple persistors that saves to files on disk
     """
 
+    def __init__(self, base_path):
+        Thread.__init__(self)
+        self._id = uuid4()
+        self.queue = Queue()
+        self.base_path = base_path
+
     def save_one_sync(self, document):
-        """Saves one Document to disk
+        """Saves one document
+
+        Arguments:
+            document {Document} -- Document injected into this function
+
+        Raises:
+            NotImplementedError: All persistors should implement a save_one_sync function
         """
-        if (not isinstance(document, Document)):
-            raise ValueError("Document must be an instance of Document")
+        raise NotImplementedError
 
-        file_path = make_valid_path(self.base_path, document)
+    def die(self):
+        """Graceful shutdown triggered by a Die task. Default behavior is to just pass
+        """
+        pass
 
-        with open(file_path, "x") as file:
-            file.write(document.data)
+    def save_one(self, document):
+        self.queue.put_nowait(document)
+
+    def shutdown(self):
+        self.queue.put(Die)
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *arg):
+        self.queue.put(Die)
+
+    def run(self):
+        debug("Persistor {} has started".format(self._id))
+
+        while True:
+            document = self.queue.get()
+            if document is Die:
+                self.die()
+                break
+            try:
+                self.save_one_sync(document)
+            except Exception as error:
+                error_dump(self._id, error)
+            self.queue.task_done()
+
+        debug("Persistor {} has stopped".format(self._id))
 
 
 def make_valid_path(base_path, document):

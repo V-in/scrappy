@@ -59,7 +59,7 @@ class Worker(Thread):
         """Enqueues a task to be executed later
 
         Arguments:
-            task Job -- task to be enqueued
+            task task -- task to be enqueued
         """
         self.queue.put(task)
 
@@ -74,8 +74,9 @@ class Worker(Thread):
             if task is Die:
                 break
             try:
-                task(self.driver)
+                task._run(self.driver)
             except Exception as error:
+                debug(error)
                 error_dump.error_dump(self._id, error)
             self.queue.task_done()
 
