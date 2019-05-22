@@ -2,6 +2,9 @@ from scrappy.scheduler.round_robin import RoundRobin
 from scrappy.persistor.dummy_persistor import DummyPersistor
 from scrappy.tasks.task import Task
 from scrappy.persistor.document import Document
+from pathlib import Path
+
+_current_path = Path().absolute()
 
 
 class HelloWorld(Task):
@@ -17,8 +20,8 @@ class HelloWorld(Task):
         persistor.save_one(doc)
 
 
-def test_robin_round_scheduler():
-    s = RoundRobin(2, "/home/vinicius/Downloads/chromedriver", headless=True)
+def test_round_robin_scheduler():
+    s = RoundRobin(2, headless=True)
     p = DummyPersistor()
     task = HelloWorld(p)
 
@@ -28,3 +31,15 @@ def test_robin_round_scheduler():
 
     s.start()
     s.dispose()
+    assert s.tasks.qsize() == 0
+
+
+def test_round_robin_context_manager():
+    p = DummyPersistor()
+    task = HelloWorld(p)
+    with RoundRobin(1, headless=False) as scheduler:
+        scheduler.schedule_task(task)
+        scheduler.schedule_task(task)
+        scheduler.schedule_task(task)
+        scheduler.schedule_task(task)
+        scheduler.schedule_task(task)

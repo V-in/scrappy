@@ -17,9 +17,8 @@ class Worker(Thread):
     until a Die task arrives.
     """
 
-    def __init__(self, driver_path, headless=True):
+    def __init__(self, headless=True):
         Thread.__init__(self)
-        self.driver_path = driver_path
         self.driver = None
         self.headless = headless
         self._id = uuid4()
@@ -44,7 +43,7 @@ class Worker(Thread):
         if(self.headless):
             options.add_argument('headless')
         self.driver = webdriver.Chrome(
-            self.driver_path, options=options)
+            "chromedriver", options=options)
         debug("Worker {} has started".format(self._id))
 
     def dispose(self):
@@ -72,6 +71,7 @@ class Worker(Thread):
         while True:
             task = self.queue.get()
             if task is Die:
+                self.queue.task_done()
                 break
             try:
                 task._run(self.driver)

@@ -5,7 +5,7 @@ from pytest import raises
 
 
 def test_format_error():
-    error, error_id = format_error("eita p** deu errado")
+    error, error_id = format_error("An error occured")
     assert type(error) == str
 
 

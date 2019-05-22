@@ -11,19 +11,20 @@ debug = pydebug.debug("scheduler")
 
 class Scheduler(Thread):
 
-    def __init__(self, pool_size, driver_path, headless=True):
+    def __init__(self, pool_size, headless=True):
         Thread.__init__(self)
         self.pool = list()
         self.retry = Queue()
         self.tasks = Queue()
         self.pool_size = pool_size
         self.headless = headless
-        self.pool = create(pool_size, driver_path, headless)
+        self.pool = create(pool_size, headless)
 
     def __enter__(self):
         return self
 
     def __exit__(self, *arg):
+        self.start()
         dispose(self.pool)
 
     def schedule_task(self, task):

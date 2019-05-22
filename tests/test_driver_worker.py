@@ -4,7 +4,7 @@ from scrappy.tasks.sample_tasks import HelloGoogle
 
 
 def test_worker_with_context():
-    with Worker("/home/vinicius/Downloads/chromedriver") as worker:
+    with Worker() as worker:
 
         assert not worker.is_open
         worker.start()
@@ -21,7 +21,7 @@ def test_worker_with_context():
 
 
 def test_worker_without_tasks():
-    with Worker("/home/vinicius/Downloads/chromedriver") as worker:
+    with Worker() as worker:
 
         assert not worker.is_open
         worker.start()
@@ -29,7 +29,7 @@ def test_worker_without_tasks():
 
 
 def test_worker_without_context():
-    worker = Worker("/home/vinicius/Downloads/chromedriver")
+    worker = Worker()
     assert not worker.is_open
     worker.start()
     assert worker.is_open

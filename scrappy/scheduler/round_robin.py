@@ -11,8 +11,8 @@ debug = pydebug.debug("scheduler")
 
 
 class RoundRobin(Scheduler):
-    def __init__(self, pool_size, driver_path, headless=True):
-        super().__init__(pool_size, driver_path, headless)
+    def __init__(self, pool_size, headless=True):
+        super().__init__(pool_size, headless)
 
     def consume_queue(self, q):
         """task queue consumption implementation

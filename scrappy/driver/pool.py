@@ -3,9 +3,8 @@ from scrappy.core.commands import Die
 import time
 
 
-def create(size, driver_path="/home/vinicius/Downloads/chromedriver",
-           headless=True):
-    return list([Worker(driver_path, headless) for _ in range(size)])
+def create(size, headless=True):
+    return list([Worker(headless) for _ in range(size)])
 
 
 def start_all(pool):
@@ -26,3 +25,5 @@ def dispose(pool):
     """
     for worker in pool:
         worker.schedule_task(Die)
+    for worker in pool:
+        worker.queue.join()
