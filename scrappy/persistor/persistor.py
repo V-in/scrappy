@@ -1,5 +1,6 @@
 from scrappy.persistor.document import Document
 from scrappy.core.error_dump import error_dump
+from scrappy.util.tmpFile import tmpFile
 from scrappy.core.utils import ensure_dir
 from scrappy.core.commands import Die
 from os import path, makedirs
@@ -85,7 +86,7 @@ def make_valid_path(base_path, document):
 
         debug(msg.format(base_path))
 
-        new_file_path = "/tmp/scrappy/orphans"
+        new_file_path = tmpFile("scrappy/orphans")
         if not path.exists(new_file_path):
             makedirs(new_file_path)
 

@@ -1,8 +1,10 @@
 from scrappy.driver.worker import Worker
 from scrappy.core.commands import Die
 from scrappy.tasks.sample_tasks import HelloGoogle
+import pytest
 
 
+@pytest.mark.timeout(30)
 def test_worker_with_context():
     with Worker() as worker:
 
@@ -20,6 +22,7 @@ def test_worker_with_context():
         worker.join()
 
 
+@pytest.mark.timeout(30)
 def test_worker_without_tasks():
     with Worker() as worker:
 
@@ -28,6 +31,7 @@ def test_worker_without_tasks():
         assert worker.is_open
 
 
+@pytest.mark.timeout(30)
 def test_worker_without_context():
     worker = Worker()
     assert not worker.is_open

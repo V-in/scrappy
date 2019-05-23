@@ -1,6 +1,8 @@
 from scrappy.driver.pool import create, start_all, dispose
+import pytest
 
 
+@pytest.mark.timeout(30)
 def test_pool_lifecycle():
     # Birth
     pool = create(5)

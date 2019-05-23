@@ -1,4 +1,5 @@
 from time import gmtime, strftime
+from scrappy.util.tmpFile import tmpFile
 from uuid import uuid4
 import pydebug
 
@@ -23,14 +24,14 @@ def format_error(error):
     return (error, uuid)
 
 
-def error_dump(caller_id, error, path="/tmp/scrappy.dump"):
+def error_dump(caller_id, error, path=tmpFile("scrappy.dump")):
     """
         Securely logs an error
 
         Keyword arguments:
             caller_id  -- id of the caller
             error -- error to be logged
-            path  -- path to log file (default "/tmp/scrappy.dump")
+            path  -- path to log file (default tmpFile("scrappy.dump"))
     """
 
     formatedError, error_id = format_error(error)

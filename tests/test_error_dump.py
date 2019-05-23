@@ -1,5 +1,6 @@
 from scrappy.core.error_dump import error_dump, format_error
 from os import remove
+from scrappy.util.tmpFile import tmpFile
 from uuid import uuid4
 from pytest import raises
 
@@ -11,7 +12,7 @@ def test_format_error():
 
 def test_error_dump():
     _id = uuid4()
-    path = "/tmp/{}".format(_id)
+    path = tmpFile(str(_id))
     with raises(FileNotFoundError):
         open(path, 'r')
     error_dump(1, "fuck", path)
