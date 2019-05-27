@@ -1,6 +1,6 @@
 from scrappy.persistor.document import Document
 from scrappy.persistor.persistor import Persistor
-from scrappy.core.error_dump import error_dump
+from scrappy.core.crash_dump import crash_dump
 from scrappy.core.utils import ensure_dir
 from scrappy.core.commands import Die
 from os import path, makedirs

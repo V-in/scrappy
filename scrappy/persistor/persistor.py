@@ -1,5 +1,5 @@
 from scrappy.persistor.document import Document
-from scrappy.core.error_dump import error_dump
+from scrappy.core.crash_dump import crash_dump
 from scrappy.util.tmpFile import tmpFile
 from scrappy.core.utils import ensure_dir
 from scrappy.core.commands import Die
@@ -61,7 +61,7 @@ class Persistor(Thread):
             try:
                 self.save_one_sync(document)
             except Exception as error:
-                error_dump(self._id, error)
+                crash_dump(self._id, error)
             self.queue.task_done()
 
         debug("Persistor {} has stopped".format(self._id))

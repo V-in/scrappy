@@ -1,5 +1,5 @@
 from contextlib import contextmanager
-from scrappy.core import error_dump
+from scrappy.core import crash_dump
 from queue import Empty, Queue
 from selenium import webdriver
 from threading import Thread, Event
@@ -77,7 +77,7 @@ class Worker(Thread):
                 task._run(self.driver)
             except Exception as error:
                 debug(error)
-                error_dump.error_dump(self._id, error)
+                crash_dump.crash_dump(self._id, error)
             self.queue.task_done()
 
         self.dispose()

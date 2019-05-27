@@ -1,1 +1,1 @@
-__all__ = ["error_dump", "commands", "utils"]
+__all__ = ["crash_dump", "commands", "utils"]

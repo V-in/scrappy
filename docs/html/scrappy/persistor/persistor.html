@@ -23,7 +23,7 @@
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">from scrappy.persistor.document import Document
-from scrappy.core.error_dump import error_dump
+from scrappy.core.crash_dump import crash_dump
 from scrappy.util.tmpFile import tmpFile
 from scrappy.core.utils import ensure_dir
 from scrappy.core.commands import Die
@@ -85,7 +85,7 @@ class Persistor(Thread):
             try:
                 self.save_one_sync(document)
             except Exception as error:
-                error_dump(self._id, error)
+                crash_dump(self._id, error)
             self.queue.task_done()
 
         debug(&#34;Persistor {} has stopped&#34;.format(self._id))
@@ -270,7 +270,7 @@ else to the thread.</p></section>
             try:
                 self.save_one_sync(document)
             except Exception as error:
-                error_dump(self._id, error)
+                crash_dump(self._id, error)
             self.queue.task_done()
 
         debug(&#34;Persistor {} has stopped&#34;.format(self._id))</code></pre>
@@ -320,7 +320,7 @@ from the args and kwargs arguments, respectively.</p></section>
         try:
             self.save_one_sync(document)
         except Exception as error:
-            error_dump(self._id, error)
+            crash_dump(self._id, error)
         self.queue.task_done()
 
     debug(&#34;Persistor {} has stopped&#34;.format(self._id))</code></pre>

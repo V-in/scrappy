@@ -24,7 +24,7 @@ def format_error(error):
     return (error, uuid)
 
 
-def error_dump(caller_id, error, path=tmpFile("scrappy.dump")):
+def crash_dump(caller_id, error, path=tmpFile("scrappy.dump")):
     """
         Securely logs an error
 

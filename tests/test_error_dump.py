@@ -1,4 +1,4 @@
-from scrappy.core.error_dump import error_dump, format_error
+from scrappy.core.crash_dump import crash_dump, format_error
 from os import remove
 from scrappy.util.tmpFile import tmpFile
 from uuid import uuid4
@@ -10,12 +10,12 @@ def test_format_error():
     assert type(error) == str
 
 
-def test_error_dump():
+def test_crash_dump():
     _id = uuid4()
     path = tmpFile(str(_id))
     with raises(FileNotFoundError):
         open(path, 'r')
-    error_dump(1, "fuck", path)
+    crash_dump(1, "fuck", path)
     try:
         open(path, 'r')
     except:

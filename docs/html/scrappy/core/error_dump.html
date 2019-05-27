@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.6.2" />
-<title>scrappy.core.error_dump API documentation</title>
+<title>scrappy.core.crash_dump API documentation</title>
 <meta name="description" content="" />
 <link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
 <link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
@@ -17,7 +17,7 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>scrappy.core.error_dump</code></h1>
+<h1 class="title">Module <code>scrappy.core.crash_dump</code></h1>
 </header>
 <section id="section-intro">
 <details class="source">
@@ -48,7 +48,7 @@ def format_error(error):
     return (error, uuid)
 
 
-def error_dump(caller_id, error, path=tmpFile(&#34;scrappy.dump&#34;)):
+def crash_dump(caller_id, error, path=tmpFile(&#34;scrappy.dump&#34;)):
     &#34;&#34;&#34;
         Securely logs an error
 
@@ -75,8 +75,8 @@ def error_dump(caller_id, error, path=tmpFile(&#34;scrappy.dump&#34;)):
 <section>
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
-<dt id="scrappy.core.error_dump.error_dump"><code class="name flex">
-<span>def <span class="ident">error_dump</span></span>(<span>caller_id, error, path='/tmp/scrappy.dump')</span>
+<dt id="scrappy.core.crash_dump.crash_dump"><code class="name flex">
+<span>def <span class="ident">crash_dump</span></span>(<span>caller_id, error, path='/tmp/scrappy.dump')</span>
 </code></dt>
 <dd>
 <section class="desc"><p>Securely logs an error</p>
@@ -88,7 +88,7 @@ path
 &ndash; path to log file (default tmpFile("scrappy.dump"))</p></section>
 <details class="source">
 <summary>Source code</summary>
-<pre><code class="python">def error_dump(caller_id, error, path=tmpFile(&#34;scrappy.dump&#34;)):
+<pre><code class="python">def crash_dump(caller_id, error, path=tmpFile(&#34;scrappy.dump&#34;)):
     &#34;&#34;&#34;
         Securely logs an error
 
@@ -108,7 +108,7 @@ path
         file.write(str(formatedError))</code></pre>
 </details>
 </dd>
-<dt id="scrappy.core.error_dump.format_error"><code class="name flex">
+<dt id="scrappy.core.crash_dump.format_error"><code class="name flex">
 <span>def <span class="ident">format_error</span></span>(<span>error)</span>
 </code></dt>
 <dd>
@@ -153,8 +153,8 @@ path
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
-<li><code><a title="scrappy.core.error_dump.error_dump" href="#scrappy.core.error_dump.error_dump">error_dump</a></code></li>
-<li><code><a title="scrappy.core.error_dump.format_error" href="#scrappy.core.error_dump.format_error">format_error</a></code></li>
+<li><code><a title="scrappy.core.crash_dump.crash_dump" href="#scrappy.core.crash_dump.crash_dump">crash_dump</a></code></li>
+<li><code><a title="scrappy.core.crash_dump.format_error" href="#scrappy.core.crash_dump.format_error">format_error</a></code></li>
 </ul>
 </li>
 </ul>
