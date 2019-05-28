@@ -1,8 +1,27 @@
 from flask import jsonify
 from scrappy import app
+import json
+import pytest
 
-client = app.test_client()
+
+def test_distributed_crash_dump(client):
+    data = {
+        "caller_id": 1,
+        "error": "Error"
+    }
+    res = client.post(
+        "/crash_dump",
+        data=json.dumps(data),
+    )
+    assert res.status_code == 200
 
 
-def test_distributed_logger():
-    assert client.get("/") == jsonify({"key": "Hello World"})
+def test_distributed_crash_dump_bad_data(client):
+    data = {
+        "caller_id": 1,
+    }
+    res = client.post(
+        "/crash_dump",
+        data=json.dumps(data),
+    )
+    assert res.status_code == 400

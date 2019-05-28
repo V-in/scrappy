@@ -7,6 +7,7 @@
     "python.linting.pep8Enabled": true,
     "python.linting.enabled": true,
     "python.testing.pyTestArgs": [
+        "-s",
         "."
     ],
     "python.testing.unittestEnabled": false,
