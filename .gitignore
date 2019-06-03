@@ -4,3 +4,8 @@ env/
 .pytest_cache/
 chromedriver
 **/*.pyc
+dist/
+build/
+tasks/
+results/
+scrappy_webdriver.egg-info
