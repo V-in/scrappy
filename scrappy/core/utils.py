@@ -6,3 +6,9 @@ def ensure_dir(dir_path):
     """
     if not path.exists(dir_path):
         mkdir(dir_path)
+
+
+def chunks(l, n):
+    """Yield successive n-sized chunks from l."""
+    for i in range(0, len(l), n):
+        yield l[i:i + n]

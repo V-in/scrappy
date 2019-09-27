@@ -1,6 +1,7 @@
 class Task():
-    def __init__(self, persistor):
+    def __init__(self, persistor, extra_args=None):
         self.persistor = persistor
+        self.extra_args = extra_args
 
     def bootstrap_condition(self, driver):
         return True

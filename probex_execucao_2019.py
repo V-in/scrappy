@@ -6,6 +6,10 @@ import json
 import code
 import re
 
+import pydebug
+
+debug = pydebug.debug("driver:task")
+
 
 class LocaisRealizacao(Task):
     def __init__(self, persistor):
@@ -65,13 +69,13 @@ class LocaisRealizacao(Task):
         table_header = driver.find_element_by_xpath("/html[1]/body[1]/div[2]/div[2]/form[2]/table[1]/caption[1]")
         n_items = int(re.match(r'.*\(([0-9]*)\).*', table_header.text).groups()[0])
 
-        for i in range(2):
+        for i in range(n_items):
             driver.find_elements_by_css_selector('td:nth-child(6) img')[i].click()
-            button_text = driver.find_elements_by_xpath("//a[contains(text(),'Clique aqui para visualizar os participantes desta')]")[0].get_attribute("onclick")
+            button_text = driver.find_elements_by_css_selector("#j_id_jsp_188201070_4 > table > tbody > tr:nth-child(40) > td > a")[0].get_attribute("onclick")
             doc_id = re.match(r".*'id':'(\d*)'", button_text).groups()[0]
             persistor.save_one(Document(doc_id, driver.page_source))
             driver.back()
-            print('Scrapped {} of {}. ID={}'.format(i + 1, n_items, doc_id) + str(i))
+            debug('Scrapped {} of {}. ID={}'.format(i + 1, n_items, doc_id) + str(i))
 
 
 p = InMemoryPersistor()
