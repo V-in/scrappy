@@ -4,7 +4,7 @@ autopep8==1.4.4
 Click==7.0
 Flask==1.0.3
 itsdangerous==1.1.0
-Jinja2==2.10.1
+Jinja2==2.11.3
 MarkupSafe==1.1.1
 more-itertools==7.0.0
 pep8==1.7.1
